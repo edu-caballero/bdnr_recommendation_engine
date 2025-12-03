@@ -1,7 +1,6 @@
 from app.domain.models import UserSimilaritySyncRequest
 from app.core.neo4j_client import run_write
 
-
 def sync_user_similarity(req: UserSimilaritySyncRequest) -> int:
     """
     Actualiza relaciones SIMILAR_A para varios usuarios.

@@ -3,7 +3,6 @@ from app.core.config import settings
 
 _driver: Driver | None = None
 
-
 def get_driver() -> Driver:
     global _driver
     if _driver is None:
@@ -12,7 +11,6 @@ def get_driver() -> Driver:
             auth=(settings.neo4j_user, settings.neo4j_password),
         )
     return _driver
-
 
 def close_driver() -> None:
     global _driver

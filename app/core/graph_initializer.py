@@ -1,14 +1,7 @@
 from pathlib import Path
-from app.core.neo4j_client import get_driver
-from app.core.config import settings
-
-
-# app/core/graph_initializer.py (o donde la tengas)
-from pathlib import Path
 from neo4j.exceptions import Neo4jError
 from app.core.neo4j_client import get_driver
 from app.core.config import settings
-
 
 def run_cypher_file(path: Path) -> None:
     cypher = path.read_text(encoding="utf-8")
@@ -21,8 +14,6 @@ def run_cypher_file(path: Path) -> None:
             stmt = statement.strip()
             if not stmt:
                 continue
-
-            # Mostrar los primeros caracteres para debug
             preview = " ".join(stmt.split())[:120]
             print(f"[init]  Sentencia {idx}: {preview}...")
 
@@ -38,8 +29,7 @@ def run_cypher_file(path: Path) -> None:
                 )
             except Neo4jError as e:
                 print(f"[init]    !! Error ejecutando sentencia {idx}: {e}")
-                # si querés podés hacer raise acá para que reviente el startup
-                # raise
+                raise
     print(f"[init] Archivo {path.name} terminado.")
 
 
@@ -47,7 +37,6 @@ def run_cypher_file(path: Path) -> None:
 def initialize_graph() -> None:
     """
     Ejecuta los scripts de constraints/índices y nodos iniciales.
-    Idempotente si tus .cypher usan CREATE CONSTRAINT IF NOT EXISTS, etc.
     """
     cypher_dir = settings.cypher_dir
     constraints = cypher_dir / "01_constraints_indexes.cypher"
