@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.graph_initializer import initialize_graph
 from app.core.neo4j_client import close_driver
-from app.api import routes_events, routes_health
+from app.api import routes_events, routes_health, routes_admin, routes_recommendations
 
 app = FastAPI(
     title="Duolingo Recommender Service",
@@ -20,6 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 def on_startup():
     if settings.initialize_graph_on_startup:
@@ -33,3 +34,5 @@ def on_shutdown():
 
 app.include_router(routes_health.router)
 app.include_router(routes_events.router)
+app.include_router(routes_admin.router)
+app.include_router(routes_recommendations.router)

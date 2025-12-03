@@ -22,7 +22,12 @@ def close_driver() -> None:
 
 
 def run_write(cypher: str, parameters: dict | None = None):
-    """Helper para ejecutar escrituras."""
     driver = get_driver()
     with driver.session() as session:
         return session.execute_write(lambda tx: tx.run(cypher, **(parameters or {})))
+
+def run_read(cypher: str, parameters: dict | None = None) -> list[dict]:
+    driver = get_driver()
+    with driver.session(database=settings.neo4j_database) as session:
+        result = session.run(cypher, **(parameters or {}))
+        return list(result.data())
