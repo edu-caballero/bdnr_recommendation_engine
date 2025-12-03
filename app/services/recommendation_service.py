@@ -2,7 +2,6 @@ from typing import List
 from app.core.neo4j_client import run_read
 from app.domain.models import RecommendationItem, RecommendationsResponse
 
-
 # -------------------------
 # Estrategia 1: weak-skills
 # -------------------------
@@ -73,7 +72,6 @@ def recommend_by_weak_skills(
         )
 
     return items
-
 
 # -----------------------------
 # Estrategia 2: similar-users
@@ -146,7 +144,6 @@ def recommend_by_similar_users(
 
     return items
 
-
 # ----------------------------------------------------
 # Estrategia 3: FALLA_EN_SKILL + PREFIERE_ETIQUETA
 # ----------------------------------------------------
@@ -165,7 +162,6 @@ def recommend_by_skills_and_preferences(
     - Incorporamos PREFIERE_ETIQUETA del usuario sobre las etiquetas de esas lecciones.
     - score = alpha * skill_score + beta * pref_score
     """
-
     cypher = """
     MATCH (u:Usuario {id_usuario: $user_id})-[fs:FALLA_EN_SKILL]->(sk:Skill)
     WHERE fs.tasa_error >= $min_error_rate
@@ -236,7 +232,6 @@ def recommend_by_skills_and_preferences(
         )
 
     return items
-
 
 # ----------------------------------------
 # Orquestador: decide qué estrategia usar

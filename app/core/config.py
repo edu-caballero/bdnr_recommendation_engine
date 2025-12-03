@@ -1,4 +1,3 @@
-# app/core/config.py
 from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv, find_dotenv

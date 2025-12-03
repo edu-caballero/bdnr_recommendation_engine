@@ -20,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 @app.on_event("startup")
 def on_startup():
     if settings.initialize_graph_on_startup:
@@ -30,7 +29,6 @@ def on_startup():
 @app.on_event("shutdown")
 def on_shutdown():
     close_driver()
-
 
 app.include_router(routes_health.router)
 app.include_router(routes_events.router)

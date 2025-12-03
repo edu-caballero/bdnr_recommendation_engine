@@ -5,7 +5,6 @@ from app.domain.models import (
 from app.clients.profile_client import get_user_profile
 from app.core.neo4j_client import run_write
 
-
 # --- Helpers internos --- #
 
 def upsert_user_from_profile(profile: UserProfile) -> None:
@@ -79,7 +78,6 @@ def register_lesson_completion(profile: UserProfile, event: LessonCompletedEvent
         },
     )
 
-
 def upsert_user_preferences(profile: UserProfile) -> None:
     if not profile.preferences:
         return
@@ -115,7 +113,6 @@ def upsert_user_preferences(profile: UserProfile) -> None:
         },
     )
 
-
 def upsert_user_skill_errors(profile: UserProfile, event: LessonCompletedEvent) -> None:
     """
     Actualiza relaciones FALLA_EN_SKILL para el usuario, en base al agregado de errores por skill.
@@ -147,7 +144,6 @@ def upsert_user_skill_errors(profile: UserProfile, event: LessonCompletedEvent) 
                               THEN toFloat(s.errors) / s.attempts
                               ELSE 0.0 END
     """
-
     skills_payload = [
         {
             "skill_id": s.skill_id,
@@ -177,7 +173,6 @@ def process_lesson_completed_event(event: LessonCompletedEvent) -> None:
     - Actualiza FALLA_EN_SKILL si el evento trae stats por skill
     """
     profile: UserProfile = get_user_profile(event.user_id)
-
     upsert_user_from_profile(profile)
     register_lesson_completion(profile, event)
     upsert_user_preferences(profile)

@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
-
 # --- Perfil de usuario (lo que devuelve el subsistema de perfiles) --- #
 
 class UserPreference(BaseModel):

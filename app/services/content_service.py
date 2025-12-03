@@ -1,7 +1,6 @@
 from app.domain.models import ContentSyncRequest
 from app.core.neo4j_client import run_write
 
-
 def sync_lesson_content(req: ContentSyncRequest) -> int:
     """
     Sincroniza relaciones estructurales de catálogo:
@@ -54,7 +53,6 @@ def sync_lesson_content(req: ContentSyncRequest) -> int:
         MERGE (l)-[:TIENE_EJERCICIO]->(ex)
       )
     """
-
     lessons_payload = [
         {
             "lesson_id": lesson.lesson_id,
